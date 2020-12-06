@@ -14,14 +14,12 @@ class CustomsGroup
   private
 
   def aggregate_data
-    @data.join.chars.each_with_object(Hash.new(0)) { |answer, counter| counter[answer] += 1 }
+    @data.join.chars.tally
   end
 end
 
 groups = File.open('input.txt', 'r') do |file|
-  file.readlines.join.split("\n\n").map do |answers_raw|
-    CustomsGroup.new(answers_raw.split("\n"))
-  end
+  file.readlines.join.split("\n\n").map { |answers_raw| CustomsGroup.new(answers_raw.split("\n")) }
 end   
 
 p groups.map(&:answer_count).sum
