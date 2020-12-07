@@ -1,7 +1,8 @@
 class Bag
   attr_reader :inner_bags
   
-  def initialize(inner_bags)
+  def initialize(colour, inner_bags)
+    @colour = colour
     @inner_bags = inner_bags
     @contains_bag = false
   end
@@ -10,8 +11,9 @@ class Bag
     @contains_bag
   end
 
-  def contains_bag
+  def save
     @contains_bag = true
+    self
   end
 end
 
@@ -21,12 +23,7 @@ class Bags
   end
 
   def that_have(search_colour)
-    @bags.filter_map do |bag_colour, bag|
-      if bag.inner_bags.keys.any? { |colour| has_bag?(colour, search_colour) }
-        bag.contains_bag
-        bag_colour
-      end
-    end
+    @bags.filter_map { |_bag_colour, bag| bag.save if bag.inner_bags.keys.any? { |colour| has_bag?(colour, search_colour) }}
   end
 
   def inside(search_colour, number = 1)
@@ -38,9 +35,8 @@ class Bags
   def count(bag_data)
     inner_bags = @bags[bag_data[0]].inner_bags
     return 0 if inner_bags.empty?
-    inner_bags.map do |inner_bag_data|
-      (inner_bag_data[1]) + ((inner_bag_data[1]) * (count(inner_bag_data)))
-    end.sum
+
+    inner_bags.map { |inner_bag_data| inner_bag_data[1] + (inner_bag_data[1] * count(inner_bag_data)) }.sum
   end
 
   def has_bag?(colour, search_colour)
@@ -58,13 +54,11 @@ bags_data = File.open('input.txt', 'r') do |file|
     .map { |line| line.split(' bags contain ') }
     .each_with_object({}) do |bag_raw, hash|
       inner_bags = bag_raw[1].split(', ').each_with_object({}) do |bag_data, bag_hash|
-        bag_colour = bag_data[2..-1].gsub(/ bag[s]?[.]?/, '')
-        bag_count = bag_data[0]
+        bag_count, bag_colour = bag_data[0], bag_data[2..-1].gsub(/ bag[s]?[.]?/, '')
         next unless !!bag_count.match(/\d/) 
         bag_hash[bag_colour] = bag_count.to_i
       end
-
-      hash[bag_raw[0]] = Bag.new(inner_bags)
+      hash[bag_raw[0]] = Bag.new(bag_raw[0], inner_bags)
     end
 end
 
