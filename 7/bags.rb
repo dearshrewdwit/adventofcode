@@ -26,17 +26,11 @@ class Bags
     @bags.filter_map { |_bag_colour, bag| bag.save if bag.inner_bags.keys.any? { |colour| has_bag?(colour, search_colour) }}
   end
 
-  def inside(search_colour, number = 1)
-    count([search_colour, number])
-  end
-  
-  private
-
-  def count(bag_data)
-    inner_bags = @bags[bag_data[0]].inner_bags
+  def inside(colour, number = 1)
+    inner_bags = @bags[colour].inner_bags
     return 0 if inner_bags.empty?
 
-    inner_bags.map { |inner_bag_data| inner_bag_data[1] + (inner_bag_data[1] * count(inner_bag_data)) }.sum
+    inner_bags.map { |inner_bag_data| inner_bag_data[1] + (inner_bag_data[1] * inside(*inner_bag_data)) }.sum
   end
 
   def has_bag?(colour, search_colour)
