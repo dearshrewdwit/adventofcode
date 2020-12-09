@@ -1,16 +1,16 @@
 def weak_number(numbers, preamble = 25)
-  numbers.filter_map.with_index do |number, index|
+  numbers.detect.with_index do |number, index|
     next if index < preamble
-    number if numbers[(index-preamble)..(index-1)].combination(2).map(&:sum).none? {|sum| sum == number }
-  end.first
+    numbers[(index-preamble)..(index-1)].combination(2).map(&:sum).none? {|sum| sum == number }
+  end
 end
 
 def encryption_weakness(numbers, weak_number)
-  min_add_max(set(numbers, weak_number))
+  set(numbers, weak_number).minmax.sum
 end
 
 def numbers
-  File.open('input.txt', 'r') { |file| file.readlines(chomp: true).map(&:to_i) }
+  File.open('input.txt', 'r').readlines(chomp: true).map(&:to_i)
 end
 
 def set(numbers, weak_number)
@@ -22,10 +22,6 @@ def find(numbers, index, sum, set = [])
   return if index == numbers.length
   return if set.sum > sum
   find(numbers, index + 1, sum, set + [numbers[index]])
-end
-
-def min_add_max(set)
-  set.min + set.max
 end
 
 p weak_number(numbers)
