@@ -5,16 +5,15 @@ def weak_number(numbers, preamble = 25)
   end.first
 end
 
-def encryption_weakness(numbers)
-  min_add_max(set(numbers))
+def encryption_weakness(numbers, weak_number)
+  min_add_max(set(numbers, weak_number))
 end
 
 def numbers
   File.open('input.txt', 'r') { |file| file.readlines(chomp: true).map(&:to_i) }
 end
 
-def set(numbers)
-  weak_number = weak_number(numbers)
+def set(numbers, weak_number)
   numbers.filter_map.with_index { |number, index| find(numbers[index..-1], 0, weak_number) }.first
 end
 
@@ -30,4 +29,4 @@ def min_add_max(set)
 end
 
 p weak_number(numbers)
-p encryption_weakness(numbers)
+p encryption_weakness(numbers, weak_number(numbers))
