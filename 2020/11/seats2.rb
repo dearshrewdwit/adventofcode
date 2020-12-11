@@ -1,4 +1,4 @@
-SLOPES = [
+DIRECTIONS = [
   [-1, -1],
   [-1, 0],
   [-1, 1],
@@ -10,31 +10,31 @@ SLOPES = [
 ]
 
 def tick(seats)
-  new_seats = seats.map.with_index do |row, row_index|
-    row.chars.map.with_index { |seat, col_index| process(row_index, col_index, seats) }.join
+  new_seats = seats.map.with_index do |seats_row, row|
+    seats_row.chars.map.with_index { |seat, col| process(row, col, seats) }.join
   end
   return seats if new_seats == seats
   tick(new_seats)
 end
 
-def process(row_index, col_index, seats)
-  seat = seats[row_index][col_index]
+def process(row, col, seats)
+  seat = seats[row][col]
   return '.' if seat == '.'
-  visible_seats = find_visible_seats(row_index, col_index, seats)
+  visible_seats = find_visible_seats(row, col, seats)
   return '#' if seat == 'L' && visible_seats.count('#').zero?
   return 'L' if seat == '#' && visible_seats.count('#') >= 5
   seat
 end
 
-def find_visible_seats(row_index, col_index, seats, neighbours_indexes = [])
-  SLOPES.filter_map { |slope| find_first_visible_seat(row_index, col_index, seats, slope) }
+def find_visible_seats(row, col, seats)
+  DIRECTIONS.filter_map { |direction| first_visible_seat(row, col, seats, direction) }
 end
 
-def find_first_visible_seat(row_index, col_index, seats, slope, seat ='.')
-  col_index, row_index = col_index + slope[0], row_index + slope[1]
+def first_visible_seat(row, col, seats, direction, seat ='.')
+  col, row = col + direction[0], row + direction[1]
   return seat if seat != '.'
-  return if [row_index, col_index].any?(&:negative?) || col_index >= seats.first.length || row_index >= seats.length
-  find_first_visible_seat(row_index, col_index, seats, slope, seats[row_index][col_index])
+  return if [row, col].any?(&:negative?) || col >= seats.first.length || row >= seats.length
+  first_visible_seat(row, col, seats, direction, seats[row][col])
 end
 
 seats = File.open('input.txt', 'r').readlines(chomp: true)
