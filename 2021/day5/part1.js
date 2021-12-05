@@ -15,8 +15,7 @@ fs.readFile('data.txt', 'utf8' , (err, data) => {
     const deltaX = start[0] - end[0]
     const deltaY = start[1] - end[1]
     if (deltaX  === 0 && deltaY !== 0) {
-      const temp = getCoords(start, end, deltaY, 1)
-      return temp
+      return getCoords(start, end, deltaY, 1)
     } else if (deltaX !== 0 && deltaY === 0) {
       return getCoords(start, end, deltaX, 0)
     } else { return [] }
