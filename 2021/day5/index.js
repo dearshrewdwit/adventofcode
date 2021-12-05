@@ -1,7 +1,7 @@
 const fs = require('fs')
 const util = require('util')
 
-fs.readFile('test.txt', 'utf8' , (err, data) => {
+fs.readFile('data.txt', 'utf8' , (err, data) => {
   if (err) {
     console.error(err)
     return
@@ -18,10 +18,10 @@ fs.readFile('test.txt', 'utf8' , (err, data) => {
       return getCoords(start, end, deltaY, 1)
     } else if (deltaX !== 0 && deltaY === 0) {
       return getCoords(start, end, deltaX, 0)
-    }
+    } else { return [] }
   })
   let count = 0
-  const sortedCoords = coords.flat().sort().filter(coord => coord !== undefined)
+  const sortedCoords = coords.flat().sort()
   for (let i=1; i<sortedCoords.length; i++) {
     let prev = sortedCoords[i-1]
     let current = sortedCoords[i]
