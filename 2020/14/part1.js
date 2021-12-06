@@ -16,13 +16,11 @@ fs.readFile('input.txt', 'utf8' , (err, data) => {
       return line.split("] = ")
     })
   })
-  
+
   const mem = {}
   programs.forEach(program => {
     const mask = program.shift()
-    console.log("next program")
     if (program[program.length-1][0] === '') program.pop()
-    console.log(program)
     program.forEach(operation => {
       const bin = ("000000000000000000000000000000000000" + (Number(operation[1])).toString(2)).slice(-36)
       const masked = bin.split('').map((char, index) => {
@@ -38,4 +36,3 @@ fs.readFile('input.txt', 'utf8' , (err, data) => {
   })
   console.log(Object.values(mem).reduce((a,b) => a + b))
 })
-
