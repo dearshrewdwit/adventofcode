@@ -1,7 +1,7 @@
 const fs = require('fs')
 const util = require('util')
 
-fs.readFile('data1.txt', 'utf8' , (err, data) => {
+fs.readFile('test.txt', 'utf8' , (err, data) => {
   if (err) {
     console.error(err)
     return
