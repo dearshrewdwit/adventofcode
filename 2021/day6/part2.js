@@ -20,11 +20,7 @@ function processTicks(timersObj, tick, end) {
   const births = timersObj[0]
   const keys = Object.keys(timersObj)
   keys.forEach(key => {
-    let shift = key-1
-    if (shift < 0) {
-    } else {
-      nextTimersObj[shift] = timersObj[key]
-    }
+    if (key-1 >= 0) nextTimersObj[key-1] = timersObj[key]
   })
   nextTimersObj[6]+= births
   nextTimersObj[8] = births
