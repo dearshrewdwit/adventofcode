@@ -14,7 +14,7 @@ fs.readFile('data.txt', 'utf8' , (err, data) => {
 })
 
 function findFuel(positions, position, fuels) {
-  if (fuels[position-1] > fuels[position] && fuels[position+1] > fuels[position]) return position
+  if (fuels[position-1] > fuels[position] && fuels[position+1] > fuels[position]) return fuels[position]
   fuels[position] = positions.map(num => Math.abs(num - position)).reduce((a, b) => a + b)
   let nextPosition
   if (fuels[position-1] === undefined && fuels[position+1] === undefined) {

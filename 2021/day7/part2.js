@@ -9,13 +9,13 @@ fs.readFile('data.txt', 'utf8' , (err, data) => {
   const parsedLines = data.trim().split(",").map(line => Number(line))
   const median = parsedLines.sort()[Math.floor(parsedLines.length/2)]
   const fuel = findFuel(parsedLines, median, {})
+
   console.log(fuel)
 })
 
 function findFuel(positions, position, fuels) {
   if (fuels[position-1] > fuels[position] && fuels[position+1] > fuels[position]) return fuels[position]
   fuels[position] = positions.map(num => triangular(Math.abs(num - position))).reduce((a, b) => a + b)
-
   let nextPosition
   if (fuels[position-1] === undefined && fuels[position+1] === undefined) {
     nextPosition = position+1
