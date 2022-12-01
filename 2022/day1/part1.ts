@@ -1,20 +1,16 @@
-const fs = require('fs')
+const fs = require('fs/promises')
 const util = require('util')
 
-fs.readFile('./day1/data.txt', 'utf8' , (err: any, data: string) => {
-  if (err) {
-    console.error(err)
-    return
-  }
+export const main = async () => {
+  const data: string = await fs.readFile('./day1/data.txt', 'utf8')
 
   const groupCals = data.trim().split("\n\n").map((group: string) => {
     const calories = group.split("\n").map(Number)
-    const totalCals = calories.reduce((a: number, b: number) => a + b, 0)
-    return totalCals
+    return calories.reduce((a: number, b: number) => a + b, 0)
   })
 
   const sortedGroups = groupCals.sort((a: number, b: number) => a - b)
   console.log(sortedGroups[sortedGroups.length-1])
-})
+}
 
-export {};
+main()

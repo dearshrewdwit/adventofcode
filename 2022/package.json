@@ -2,5 +2,14 @@
   "devDependencies": {
     "@types/node": "^18.11.10",
     "typescript": "^4.9.3"
-  }
+  },
+  "name": "2022",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "day": "node ./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
