@@ -21,10 +21,10 @@ const movePts: MovePts = {
 const decryptMove = (moveEnc: string) => Object.keys(dict).find((move) => dict[move as keyof Dict].includes(moveEnc)) ?? ""
 
 export const main = async () => {
-  const data: string = await fs.readFile('./day2/input.txt', 'utf8')
+  const data = await fs.readFile('./day2/input.txt', 'utf8')
 
-  return data.trim().split("\n").reduce((acc: number, val: string) => {
-    let roundPts: number = 0
+  return data.split("\n").reduce((acc, val) => {
+    let roundPts = 0
     const [oppMove, myMove] = val.split(" ").map(decryptMove)
     roundPts += movePts[myMove as keyof MovePts]
 

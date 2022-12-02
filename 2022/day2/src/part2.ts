@@ -20,18 +20,18 @@ const resultPts: ResultPts = {
 }
 
 const movesForResult: MovesForResult = {
-  "X": (oppMove: string): string => rules[oppMove as keyof Rules2],
-  "Y": (oppMove: string): string => oppMove,
-  "Z": (oppMove: string): string => Object.keys(rules).find((move) => rules[move as keyof Rules2] === oppMove) ?? ""
+  "X": (oppMove) => rules[oppMove as keyof Rules2],
+  "Y": (oppMove) => oppMove,
+  "Z": (oppMove) => Object.keys(rules).find((move) => rules[move as keyof Rules2] === oppMove) ?? ""
 }
 
 export const main = async () => {
   const data = await fs.readFile('./day2/input.txt', 'utf8')
 
-  return data.trim().split("\n").reduce((acc: number, val: string) => {
+  return data.split("\n").reduce((acc, val) => {
     const [oppMove, result] = val.split(" ")
-    const myMove: string = movesForResult[result as keyof MovesForResult](oppMove)
-    const roundPts: number = movePts[myMove as keyof MovePts2] + resultPts[result as keyof ResultPts]
+    const myMove = movesForResult[result as keyof MovesForResult](oppMove)
+    const roundPts = movePts[myMove as keyof MovePts2] + resultPts[result as keyof ResultPts]
 
     return acc + roundPts
   }, 0)
