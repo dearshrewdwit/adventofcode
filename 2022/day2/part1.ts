@@ -25,10 +25,7 @@ export const main = async () => {
 
   const matchPts = data.trim().split("\n").reduce((acc: number, val: string) => {
     let roundPts: number = 0
-    const [oppMoveEnc, myMoveEnc] = val.split(" ")
-    const myMove: string = decryptMove(myMoveEnc)
-    const oppMove: string = decryptMove(oppMoveEnc)
-
+    const [oppMove, myMove] = val.split(" ").map(decryptMove)
     roundPts += movePts[myMove as keyof typeof movePts]
 
     if (myMove === oppMove) {
