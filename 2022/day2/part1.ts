@@ -8,7 +8,7 @@ import {
 const decryptMove = (moveEnc: string) => Object.keys(dict).find((move) => dict[move].includes(moveEnc)) ?? ""
 
 export const main = async () => {
-  const data: string = await fs.readFile('./day2/data.txt', 'utf8')
+  const data: string = await fs.readFile('./day2/input.txt', 'utf8')
 
   return data.trim().split("\n").reduce((acc: number, val: string) => {
     let roundPts: number = 0

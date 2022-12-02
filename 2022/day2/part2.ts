@@ -6,7 +6,7 @@ import {
 } from "./data"
 
 export const main = async () => {
-  const data = await fs.readFile('./day2/data.txt', 'utf8')
+  const data = await fs.readFile('./day2/input.txt', 'utf8')
 
   return data.trim().split("\n").reduce((acc: number, val: string) => {
     const [oppMove, result] = val.split(" ")
