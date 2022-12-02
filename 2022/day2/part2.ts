@@ -25,12 +25,12 @@ const movesForResult = {
 }
 
 export const main = async () => {
-  const data: string = await fs.readFile('./day2/data.txt', 'utf8')
+  const data = await fs.readFile('./day2/data.txt', 'utf8')
 
   return data.trim().split("\n").reduce((acc: number, val: string) => {
     const [oppMove, result] = val.split(" ")
     const myMove: string = movesForResult[result as keyof typeof movesForResult](oppMove)
-    const roundPts = movePts[myMove as keyof typeof movePts] + resultPts[result as keyof typeof resultPts]
+    const roundPts: number = movePts[myMove as keyof typeof movePts] + resultPts[result as keyof typeof resultPts]
 
     return acc + roundPts
   }, 0)
