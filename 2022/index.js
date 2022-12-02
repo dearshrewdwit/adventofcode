@@ -1,5 +1,23 @@
-const [day, part] = process.argv[2].split(':')
+const [day, num] = process.argv[2].split(':')
 
-let path = `./build/day${day}/part${part}.js`
+const part = `part${num}`
+const dayPath = `./build/day${day}`
+const solutionPath = `${dayPath}/${part}.js`
+const answersPath = `${dayPath}/answers.js`
 
-require(path)
+const fn = require(solutionPath).main
+const { answers } = require(answersPath)
+
+const run = async () => {
+  const res = await fn()
+  const answer = answers[part]
+  if (answer === undefined) {
+    console.log(res)
+  } else if (res === answer) {
+    console.log(`✅ ${res}`)
+  } else {
+    console.log(`❌ got: ${res}, expected: ${answer}`)
+  }
+}
+
+run()

@@ -10,8 +10,7 @@ export const main = async () => {
   })
 
   const sorted = groupCals.sort((a: number, b: number) => a - b)
-  const lastThreeTotalCals = sorted.slice(sorted.length-3, sorted.length).reduce((a: number, b: number) => a + b, 0)
-  console.log(lastThreeTotalCals)
+  return sorted.slice(sorted.length-3, sorted.length).reduce((a: number, b: number) => a + b, 0)
 }
 
 main()

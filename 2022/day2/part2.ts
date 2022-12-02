@@ -23,7 +23,7 @@ const decryptMove = (moveEnc: string) => Object.keys(dict).find((move) => dict[m
 export const main = async () => {
   const data: string = await fs.readFile('./day2/data.txt', 'utf8')
 
-  const matchPts = data.trim().split("\n").reduce((acc: number, val: string) => {
+  return data.trim().split("\n").reduce((acc: number, val: string) => {
     let roundPts: number = 0
     const [oppMoveEnc, resultEnc] = val.split(" ")
     const oppMove: string = decryptMove(oppMoveEnc)
@@ -43,8 +43,6 @@ export const main = async () => {
 
     return acc + roundPts
   }, 0)
-
-  console.log(matchPts)
 }
 
 main()
