@@ -2,8 +2,8 @@ const [day, num] = process.argv[2].split(':')
 
 const part = `part${num}`
 const dayPath = `./build/day${day}`
-const solutionPath = `${dayPath}/${part}.js`
-const answersPath = `${dayPath}/answers.js`
+const solutionPath = `${dayPath}/src/${part}.js`
+const answersPath = `${dayPath}/spec/answers.js`
 
 const fn = require(solutionPath).main
 const { answers } = require(answersPath)
