@@ -44,5 +44,3 @@ export const main = async () => {
     return acc + roundPts
   }, 0)
 }
-
-main()

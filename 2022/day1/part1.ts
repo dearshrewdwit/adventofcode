@@ -12,5 +12,3 @@ export const main = async () => {
   const sortedGroups = groupCals.sort((a: number, b: number) => a - b)
   return sortedGroups[sortedGroups.length-1]
 }
-
-main()
