@@ -38,11 +38,8 @@ export const main = async () => {
   return data.trim().split("\n").reduce((acc: number, val: string) => {
     const [oppMoveEnc, resultEnc] = val.split(" ")
     const oppMove: string = decryptMove(oppMoveEnc)
-    let myMove: string = movesForResult[resultEnc as keyof typeof movesForResult](oppMove)
-
-    let roundPts: number = 0
-    roundPts += movePts[myMove as keyof typeof movePts]
-    roundPts += resultPts[resultEnc as keyof typeof resultPts]
+    const myMove: string = movesForResult[resultEnc as keyof typeof movesForResult](oppMove)
+    const roundPts = movePts[myMove as keyof typeof movePts] + resultPts[resultEnc as keyof typeof resultPts]
 
     return acc + roundPts
   }, 0)
