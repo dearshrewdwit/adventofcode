@@ -5,7 +5,7 @@ export const main = async () => {
 
   return data
           .split("\n")
-          .reduce((acc, rucksack, index) => {
+          .reduce((acc: { all: string[], sumPriority: number }, rucksack, index) => {
             acc.all.push(rucksack)
             if ((index + 1) % 3 === 0) {
               const group = acc.all.slice(-3)
