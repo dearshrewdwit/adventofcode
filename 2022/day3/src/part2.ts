@@ -7,13 +7,12 @@ export const main = async () => {
           .split("\n")
           .reduce((acc, rucksack, index) => {
             acc.all.push(rucksack)
-            if ((index + 1) % 3 === 0) acc.groups.push(acc.all.slice(-3))
+            if ((index + 1) % 3 === 0) {
+              const group = acc.all.slice(-3)
+              const badge = group[0].split('').filter(item => group[1].includes(item) && group[2].includes(item))[0]
+              const offset = (/[a-z]/).test(badge) ? 96 : 38
+              acc.sumPriority += badge.charCodeAt(0) - offset
+            }
             return acc
-          }, { all: [], groups: [] })
-          .groups
-          .reduce((acc, group) => {
-            const badge = group[0].split('').filter(item => group[1].includes(item) && group[2].includes(item))[0]
-            const offset = (/[a-z]/).test(badge) ? 96 : 38
-            return acc + badge.charCodeAt(0) - offset
-          }, 0)
+          }, { all: [], sumPriority: 0 }).sumPriority
 }
