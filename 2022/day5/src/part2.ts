@@ -14,7 +14,7 @@ export const main = async () => {
     }
   })
 
-  moveLines.forEach((line, index) => {
+  moveLines.forEach(line => {
     const match = line.match(/[0-9]+/g)
     if (match) {
       const [num, from, to] = match.map(Number)
