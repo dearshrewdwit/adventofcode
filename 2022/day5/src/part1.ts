@@ -18,8 +18,7 @@ export const main = async () => {
     const match = line.match(/[0-9]+/g)
     if (match) {
       const [num, from, to] = match.map(Number)
-      const crates: string[] = stacks[from].splice(stacks[from].length-num, num)
-      crates.reverse().forEach(crate => stacks[to].push(crate))
+      stacks[to].push(...stacks[from].splice(stacks[from].length-num, num).reverse())
     }
   })
 
