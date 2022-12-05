@@ -16,14 +16,12 @@ export const main = async () => {
 
   moveLines.forEach((line, index) => {
     const match = line.match(/[0-9]+/g)
-    if (match) moveCrates(stacks, ...match.map(Number))
+    if (match) {
+      const [num, from, to] = match.map(Number)
+      const crates: string[] = stacks[from].splice(stacks[from].length-num, num)
+      crates.forEach(crate => stacks[to].push(crate))
+    }
   })
 
   return keys.map(key => stacks[key][stacks[key].length-1]).join('')
-}
-
-const moveCrates = (stacks: Stacks, ...moveNums: number[]) => {
-  const [num, from, to] = moveNums
-  const crates: string[] = stacks[from].splice(stacks[from].length-num, num)
-  crates.forEach(crate => stacks[to].push(crate))
 }
