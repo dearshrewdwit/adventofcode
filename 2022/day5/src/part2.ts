@@ -1,12 +1,12 @@
 const fs = require('fs/promises')
+import { Stacks } from './types'
 
 export const main = async () => {
   const data: string = await fs.readFile('./day5/input.txt', 'utf8')
-  const [stackLines, moveLines] = data.split("\n\n").map(str => str.split("\n"))
-  moveLines.pop()
-  const keys = stackLines.pop().split("   ")
+  const [stackLines, moveLines]: string[][] = data.split("\n\n").map(str => str.split("\n"))
 
-  const stacks = {}
+  const stacks: Stacks = {}
+  const keys: string[] = (stackLines.pop() || "").split("   ")
   keys.forEach(key => stacks[key] = [])
   stackLines.reverse().forEach(line => {
     for (let i = 1; i < line.length; i+=4) {
@@ -14,15 +14,16 @@ export const main = async () => {
     }
   })
 
-  moveLines.forEach(line => {
-    const [num, from, to] = line.match(/[0-9]+/g)
-    moveCrates(stacks, num, from, to)
+  moveLines.forEach((line, index) => {
+    const match = line.match(/[0-9]+/g)
+    if (match) moveCrates(stacks, ...match.map(Number))
   })
 
   return keys.map(key => stacks[key][stacks[key].length-1]).join('')
 }
 
-const moveCrates = (stacks, num, from, to) => {
-  const crates = stacks[from].splice(stacks[from].length-num, num)
+const moveCrates = (stacks: Stacks, ...moveNums: number[]) => {
+  const [num, from, to] = moveNums
+  const crates: string[] = stacks[from].splice(stacks[from].length-num, num)
   crates.forEach(crate => stacks[to].push(crate))
 }
