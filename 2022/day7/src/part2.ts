@@ -21,9 +21,9 @@ export const main = async () => {
     } else {
       const currentDir: Directory = findCurrentDir(fs.tree, fs.head, fs.tree[0])
       if (tokens[0] === 'dir') {
-        currentDir.contents.push({ type: 'dir', name: tokens[1], size: 0, contents: [] } as Directory)
+        currentDir.contents.push({ type: 'dir', name: tokens[1], size: 0, contents: [] })
       } else if ((/[0-9]+/g).test(tokens[0])) {
-        currentDir.contents.push({ type: 'file', name: tokens[1], size: Number(tokens[0]) } as File)
+        currentDir.contents.push({ type: 'file', name: tokens[1], size: Number(tokens[0]) })
       }
     }
 
@@ -45,7 +45,7 @@ const findCurrentDir = (contents: Array<Directory | File>, dirPath: string[], di
   if (index + 1 > dirPath.length) return dir
 
   const workingDir: Directory = contents
-    .filter((item): item is Directory => item.type === 'dir')
+    .filter(isDir)
     .find(item => item.name === dirPath[index]) ?? { name: '', type: '', size: 0, contents: [] }
 
   return findCurrentDir(workingDir.contents, dirPath, workingDir, index + 1)
@@ -67,4 +67,4 @@ const calculateDirSizes = (contents: Array<Directory | File>, size = 0, index = 
   return calculateDirSizes(contents, size, index + 1)
 }
 
-const isDir = (item: File | Directory): item is Directory => (item as Directory).type === 'dir'
+const isDir = (item: File | Directory): item is Directory => item.type === 'dir'
