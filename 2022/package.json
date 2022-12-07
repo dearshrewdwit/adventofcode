@@ -1,13 +1,22 @@
 {
   "devDependencies": {
     "@types/node": "^18.11.10",
+    "@typescript-eslint/eslint-plugin": "^5.45.1",
+    "@typescript-eslint/parser": "^5.45.1",
+    "eslint": "^8.29.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.6.0",
+    "eslint-plugin-promise": "^6.1.1",
     "typescript": "^4.9.3"
   },
   "name": "2022",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "day": "node ./index.js"
+    "day": "node ./index.js",
+    "linter": "npx eslint . --ext ts",
+    "linter:fix": "npx eslint . --ext ts --fix"
   },
   "author": "",
   "license": "ISC",
