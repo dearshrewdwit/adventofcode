@@ -1,5 +1,12 @@
 const fs = require('fs/promises')
 
+const nextCoords = {
+  'up': (rIndex, cIndex) => [rIndex-1, cIndex],
+  'down': (rIndex, cIndex) => [rIndex+1, cIndex],
+  'left': (rIndex, cIndex) => [rIndex, cIndex-1],
+  'right': (rIndex, cIndex) => [rIndex, cIndex+1]
+}
+
 export const main = async () => {
   const data: string = await fs.readFile('./day8/input.txt', 'utf8')
   const grid = data.trim().split("\n")
@@ -7,12 +14,10 @@ export const main = async () => {
 
   grid.forEach((row, rIndex) => {
     row.split('').forEach((tree, cIndex) => {
-      const isTreeHidden = [
-        isHidden(grid, tree, rIndex-1, cIndex, 'up')
-        isHidden(grid, tree, rIndex+1, cIndex, 'down')
-        isHidden(grid, tree, rIndex, cIndex-1, 'left')
-        isHidden(grid, tree, rIndex, cIndex+1, 'right')
-      ].every(Boolean)
+      const isTreeHidden = Object
+        .keys(nextCoords)
+        .map(direction => isHidden(grid, tree, direction, ...nextCoords[direction](rIndex, cIndex)))
+        .every(Boolean)
 
       if (!isTreeHidden) visibleTrees.push(tree)
     })
@@ -21,20 +26,11 @@ export const main = async () => {
   return visibleTrees.length
 }
 
-const isHidden = (grid, tree, rIndex, cIndex, direction) => {
-  if (grid[rIndex] === undefined || grid[rIndex][cIndex] === undefined) return false
-  const compareTree = grid[rIndex][cIndex]
-  if (compareTree >= tree) return true
+const isHidden = (grid, tree, direction, rIndex, cIndex) => {
+  if (!grid[rIndex] || !grid[rIndex][cIndex]) return false
+  if (grid[rIndex][cIndex] >= tree) return true
 
-  if (direction === 'up') {
-    rIndex += -1
-  } else if (direction === 'down') {
-    rIndex += 1
-  } else if (direction === 'left') {
-    cIndex += -1
-  } else if (direction === 'right') {
-    cIndex += 1
-  }
+  const [rIndexNew, cIndexNew] = nextCoords[direction](rIndex, cIndex)
 
-  return isHidden(grid, tree, rIndex, cIndex, direction)
+  return isHidden(grid, tree, direction, rIndexNew, cIndexNew)
 }
