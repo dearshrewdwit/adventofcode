@@ -14,9 +14,9 @@ const run = async () => {
   if (answer === undefined) {
     console.log(res)
   } else if (res === answer) {
-    console.log(`✅ ${res}`)
+    console.log(`✅ passed\n${res}`)
   } else {
-    console.log(`❌ got: ${res}, expected: ${answer}`)
+    console.log(`❌ failed\ngot: \n${res}\nexpected: \n${answer}`)
   }
 }
 
