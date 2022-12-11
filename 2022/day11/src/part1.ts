@@ -20,7 +20,7 @@ export const main = async () => {
       while (monkey.items.length > 0) {
         const item = monkey.items[monkey.items.length - 1]
         monkey.items.pop()
-        const inspectedItem = Math.floor(item / 3)
+        const inspectedItem = Math.floor(monkey.inspect(item) / 3)
         monkey.inspectedItems.push(inspectedItem)
         const nextMonkey = monkey.test(inspectedItem)
         monkeys[nextMonkey].items.push(inspectedItem)

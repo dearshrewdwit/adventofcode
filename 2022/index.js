@@ -1,3 +1,5 @@
+const util = require('util')
+
 const [day, num] = process.argv[2].split(':')
 
 const part = `part${num}`
@@ -14,9 +16,9 @@ const run = async () => {
   if (answer === undefined) {
     console.log(res)
   } else if (res === answer) {
-    console.log(`✅ passed\n${res}`)
+    console.log(`✅ passed\nanwser: ${util.inspect(res)}`)
   } else {
-    console.log(`❌ failed\ngot: \n${res}\nexpected: \n${answer}`)
+    console.log(`❌ failed\ngot:      ${util.inspect(res)}\nexpected: ${util.inspect(answer)}`)
   }
 }
 

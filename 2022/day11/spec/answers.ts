@@ -1,4 +1,4 @@
 export const answers = {
-  part1: undefined,
-  part2: undefined
+  part1: 120384,
+  part2: 32059801242
 }
